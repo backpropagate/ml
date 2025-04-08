@@ -1,4 +1,6 @@
 import os
+import numpy as np
+import hopsworks
 import polars as pl
 from decouple import config
 from supabase import create_client, Client
@@ -29,8 +31,22 @@ def from_supabase(config: dict) -> pl.DataFrame:
     raw_data = pl.DataFrame(data_chunks)
     return raw_data
 
-def to_hopsworks() -> None:
-    pass
+
+def setup_hopsworks():
+    project = hopsworks.login(api_key_value=config("HOPSWORKS_KEY"))
+    fs = project.get_feature_store()
+    return fs
+
+def to_hopsworks(data: pl.DataFrame) -> None:
+    fs = setup_hopsworks()
+    trans_fg = fs.get_or_create_feature_group(
+        name="churn_training",
+        version=1,
+        description="Churn Training data",
+        primary_key=['cc_num'],
+        event_time='datetime',
+        online_enabled=True,
+)
 
 def from_hopsworks() -> None:
     pass
