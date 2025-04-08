@@ -1,0 +1,3 @@
+paths:
+  raw_data_path: "data/raw_data.parquet"
+  preprocessed_data_path: "data/preprocessed_data.parquet"

@@ -1,0 +1,28 @@
+[project]
+name = "ml"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "hopsworks>=4.2.0",
+    "omegaconf>=2.3.0",
+    "polars>=1.26.0",
+    "prefect>=3.3.3",
+    "python-decouple>=3.8",
+    "scikit-learn>=1.6.1",
+    "supabase>=2.15.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = true
+
+[tool.setuptools]
+packages = ["src/scripts", "src/pipelines"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
